@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
+    <div class="h-full flex flex-col p-5 justify-center text-center bg-gray-50 rounded-md shadow-md">
+        <p class="text-gray-400" th:text="${username} ? 'Record already registerd under:':''"></p>
+        <!--/*@thymesVar id="username" type="String"*/-->
+        <h2 class="text-2xl" th:text="${username} ? ${username} : 'Record has not been registed'"></h2>
+    </div>
+</html>

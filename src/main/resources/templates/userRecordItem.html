@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+    <li th:each="record: ${records}" class="flex bg-gray-50 rounded-md shadow m-2 pl-5 h-16">
+        <div class="flex flex-col flex-grow m-auto">
+            <p class="p-0 m-0 text-gray-400 text-sm">Record Name:</p>
+            <span th:text="${record.recordName}"></span>
+        </div>
+        <div class="flex flex-col flex-grow m-auto">
+            <p class="p-0 m-0 text-gray-400 text-sm">Times Queried:</p>
+            <span th:text ="${record.recordQueries}"></span>
+        </div>
+    </li>
+</html>
+
+

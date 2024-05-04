@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <section id = "content-container" class="h-full w-full flex-grow flex justify-center items-center">
+        <div  class="w-96 h-72 bg-white rounded-2xl shadow-md flex flex-col justify-center items-center">
+            <form id="sign-in-form" hx-post="/login" hx-trigger="submit" hx-target = "#content-container"  method="post" class="flex flex-col items-center">
+                <h1 class="text-2xl font-bold mb-4">Login</h1>
+                <div class="mb-4">
+                    <label for="username" class="block text-gray-700">Username:</label>
+                    <div class="flex items-center justify-center p-1 mt-1 w-full border border-gray-500 rounded-md">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24"><path fill="#D82C20" d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"/></svg>
+                        <input type="text" id="username" name="username" class="form-input focus:ring-0 border-none" th:value="${username}">
+                    </div>
+                </div>
+                <div class="text-red-600 mb-1.5" th:text="${error_message}"></div>
+                <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded">Login</button>
+            </form>
+
+        </div>
+        <div id="error-message" class="hidden"></div>
+    </section>
+</html>
