@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <!--/*@thymesVar id="entriesPerUser" type="List<org.mai24028.redis_assignment_uom.models.UserEntries>"*/-->
-    <li th:each="entry: ${entriesPerUser}" class=" w-full flex bg-gray-50 rounded-md shadow m-2 pl-5 h-16">
-        <div class="flex flex-col flex-grow m-auto max-w-80">
+    <li th:each="entry: ${entriesPerUser}" class="flex bg-gray-50 rounded-md shadow m-2 pl-5 h-16">
+        <div class="flex flex-col flex-grow m-auto w-[60%]">
             <p class="p-0 m-0 text-gray-400 text-sm">User:</p>
             <span th:text="${entry.username}"></span>
         </div>

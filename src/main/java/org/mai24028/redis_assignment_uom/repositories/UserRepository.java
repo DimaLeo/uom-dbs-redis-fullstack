@@ -23,6 +23,7 @@ public class UserRepository {
             return redisTemplate.opsForSet().isMember(USER_KEY_PREFIX, username);
         }
         catch (Exception e){
+            System.out.println(e.getMessage());
             throw new Exception("Error in checking if user exists");
         }
 
@@ -33,6 +34,7 @@ public class UserRepository {
             redisTemplate.opsForSet().add(USER_KEY_PREFIX, username);
         }
         catch (Exception e){
+            System.out.println(e.getMessage());
             throw new Exception("Error in storing user");
         }
     }

@@ -5,6 +5,7 @@ import org.mai24028.redis_assignment_uom.models.UserEntries;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -21,8 +22,13 @@ public class RecordsRepository {
         this.redisTemplate = redisTemplate;
     }
 
-    public void addRecord(String username, String recordName) {
+    public void addRecord(String username, String recordName) throws Exception {
         String key = buildRecord(username);
+
+        if(Boolean.TRUE.equals(redisTemplate.opsForSet().isMember(key, recordName))){
+            throw new Exception("Record already exists");
+        }
+
         redisTemplate.opsForSet().add(key, recordName);
         redisTemplate.opsForValue().set(buildQuery(recordName), String.valueOf(0));
     }
@@ -76,6 +82,29 @@ public class RecordsRepository {
 
     }
 
+    public String getAverageQueries() {
+        Set<String> keys = redisTemplate.keys("queries:*");
+
+        int sum = 0;
+
+        for (String key : keys) {
+            String value = redisTemplate.opsForValue().get(key);
+            if (value != null) {
+                sum += Integer.parseInt(value);
+            }
+        }
+
+
+        System.out.println(sum);
+        System.out.println(keys.size());
+
+        if(!keys.isEmpty() && sum>0){
+            return String.valueOf(new DecimalFormat("#.##").format((double) sum /keys.size()));
+        }
+        else return "0";
+
+    }
+
     private String buildRecord(String username) {
         return RECORDS_KEY_PREFIX + ":" + username;
     }
@@ -83,6 +112,5 @@ public class RecordsRepository {
     private String buildQuery(String recordName) {
         return QUERIES_KEY_PREFIX + ":" + recordName;
     }
-
 
 }

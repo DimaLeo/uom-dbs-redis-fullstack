@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:hx="http://www.w3.org/1999/xhtml">
-    <section class="h-4/5 w-full mt-auto mb-auto flex-grow flex justify-center items-center">
-        <div  class="w-full h-full bg-white rounded-2xl shadow-md flex flex-col justify-center items-start p-5">
-            <div id="user-info" class="w-full flex justify-start items-end p-2 mb-2 gap-2.5 border-b border-gray-300">
+    <section class="h-[90%] w-full flex justify-center items-center">
+        <div  class="w-full h-full bg-white rounded-2xl shadow-md flex flex-col justify-start items-start px-4 py-2 gap-2.5">
+            <div id="user-info" class="w-full max-h-[35px] min-h-[30px] h-fit flex justify-start items-end pl-2 gap-2.5 border-b border-gray-300">
                 <svg xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 24 24"><path fill="#D82C20" d="M12 4a4 4 0 0 1 4 4a4 4 0 0 1-4 4a4 4 0 0 1-4-4a4 4 0 0 1 4-4m0 10c4.42 0 8 1.79 8 4v2H4v-2c0-2.21 3.58-4 8-4"/></svg>
                 <p>User : <span id="username" th:text="${username}"></span></p>
             </div>
-            <div id="functionality-container" class="flex flex-col w-full gap-5 items-center flex-grow">
-                <div id="upper-row" class="flex h-1/2 max-h-80 w-full">
-                    <div id="insertion-section" class="w-1/2 flex flex-col flex-grow gap-2.5 pr-5 border-r border-gray-300">
+            <div id="functionality-container" class="flex flex-col w-full max-h-[90%] gap-5 items-center">
+                <div id="upper-row" class="flex h-1/2 min-h-[250px] w-full">
+                    <div id="insertion-section" class="w-1/2 h-full flex flex-col flex-grow gap-2.5 pr-5 border-r border-gray-300">
                         <div class="flex flex-col gap-1">
                             <p>Insert the name of the artist you want to insert below:</p>
                             <form id="new-record-form"
@@ -33,9 +33,9 @@
                                 </button>
                             </form>
                         </div>
-                        <div class="flex-grow overflow-hidden hover:overflow-y-auto">
+                        <div class="flex-grow max-h-full overflow-auto hover:overflow-y-auto">
                             <ul id="user-entries-list"
-                                class="list-none h-full"
+                                class="list-none"
                                 hx:get ="@{/records/{username}(username=${username})}"
                                 hx-swap="innerHTML"
                                 hx-trigger="load, user-entries-list-updated from:body, search-completed from:body"
@@ -45,7 +45,7 @@
                         </div>
 
                     </div>
-                    <div id="query-section" class="w-1/2 flex flex-col flex-grow gap-5">
+                    <div id="query-section" class="w-1/2 max-h-50 flex flex-col flex-grow gap-5">
                         <form id="artist-search-form"
                               hx-post="/search"
                               hx-trigger="submit"
@@ -76,24 +76,32 @@
                         </div>
                     </div>
                 </div>
-                <div id="bottom-row" class="flex flex-col gap2.5 h-1/2 w-full">
-                    <h2 class="w-full text-center text-2xl">Statistics</h2>
-                    <div class = "flex flex-grow">
+                <div id="bottom-row" class="flex flex-col gap2.5 h-1/2 min-h-[250px] w-full">
+                    <div class = "flex flex-grow h-full">
                         <div id="user-entries-section"
-                             class=" w-full h-full p-5 my-auto overflow overflow-hidden hover:overflow-y-auto">
+                             class="w-1/2 h-full flex flex-col flex-grow gap-2.5 pr-5 border-r border-gray-300">
                             <h2>Number of entries per user:</h2>
-                            <ul id="entries-per-user"
-                                class="list-none h-full w-full "
-                                hx-get ="/entries-per-user"
-                                hx-swap="innerHTML"
-                                hx-trigger="load, user-entries-list-updated from:body">
-                            </ul>
+                            <div class="flex-grow max-h-full overflow-y-auto hover:overflow-y-auto">
+                                <ul id="entries-per-user"
+                                    class="list-none"
+                                    hx-get ="/entries-per-user"
+                                    hx-swap="innerHTML"
+                                    hx-trigger="load, user-entries-list-updated from:body">
+                                </ul>
+                            </div>
                         </div>
-                        <div id="average-queries-per-record"
-                             class="flex content-center justify-center max-w-1/2 h-60 flex-grow p-5">
-                            <div class="h-full w-60 flex flex-col gap-2.5 p-5 my-auto justify-center text-center bg-gray-50 rounded-md shadow-md">
+                        <div id="average-queries-section"
+                             class="flex content-center justify-center w-1/2 h-full mx-auto flex-grow"
+                             hx-get="/average-queries"
+                             hx-target="#average-queries-text"
+                             hx-swap="outerHTML"
+                             hx-trigger="load, search-completed from:body"
+                        >
+                            <div class="h-3/5 w-60 flex flex-col gap-2.5 my-auto justify-center text-center bg-gray-50 rounded-md shadow-md">
                                 <p class="text-gray-400">Average number of Queries:</p>
-                                <h2 class="text-5xl font-bold">33</h2>
+                                <h2 class="text-5xl font-bold"
+                                    id = "average-queries-text"
+                                >33</h2>
                             </div>
 
                         </div>
@@ -114,7 +122,6 @@
             </div>
         </div>
     </div>
-
     <script>
         setTimeout(function(){
             document.getElementById("success-alert").classList.remove("opacity-100")

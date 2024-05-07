@@ -139,7 +139,7 @@
 <!--                                    <async>true</async>-->
 <!--                                    <exec>-->
 <!--                                        <directory>src/main/frontend</directory>-->
-<!--                                        <command>npm run watch &#45;&#45; -o ${project.build.directory}/classes/static/css/style.css</command>-->
+<!--                                        <command>npm run watch -o ${project.build.directory}/classes/static/css/style.css</command>-->
 <!--                                    </exec>-->
 <!--                                </task>-->
                                 <task>

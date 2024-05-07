@@ -17,7 +17,7 @@ public class RecordsService {
     }
 
 
-    public void storeRecord(String username, String recordName) {
+    public void storeRecord(String username, String recordName) throws Exception {
         recordsRepository.addRecord(username, recordName);
     }
 
@@ -33,5 +33,9 @@ public class RecordsService {
 
     public List<UserEntries> getEntriesPerUser() {
         return recordsRepository.getEntriesPerUser();
+    }
+
+    public String getAverageQueries() {
+        return recordsRepository.getAverageQueries();
     }
 }

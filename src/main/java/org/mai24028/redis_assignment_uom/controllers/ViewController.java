@@ -66,8 +66,11 @@ public class ViewController {
     public HtmxResponse addRecord(@RequestParam("record_name") String recordName, @RequestParam("username") String username) {
 
 //        model.addAttribute("records", List.of(new RecordItem(recordName, 0)));
-
-        recordsService.storeRecord(username, recordName);
+        try{
+            recordsService.storeRecord(username, recordName);
+        } catch (Exception e) {
+            return HtmxResponse.builder().view("alreadyExistsAlert").trigger("record-already-exists").build();
+        }
 
         return HtmxResponse.builder().trigger("user-entries-list-updated").build();
     }
@@ -102,5 +105,12 @@ public class ViewController {
     public HtmxResponse getEntriesPerUser(Model model) {
         model.addAttribute("entriesPerUser", recordsService.getEntriesPerUser());
         return HtmxResponse.builder().view("entriesPerUser").build();
+    }
+
+    @HxRequest("average-queries-section")
+    @GetMapping("/average-queries")
+    public HtmxResponse getAverageQueries(Model model) {
+        model.addAttribute("queries", recordsService.getAverageQueries());
+        return HtmxResponse.builder().view("averageQueries").build();
     }
 }
